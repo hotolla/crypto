@@ -72,20 +72,18 @@ export const Wallet = () => {
   const [ totalBalanceInSelectedCurrency, setTotalBalanceInSelectedCurrency] = useState(0);
 
   useEffect(() => {
-    fetchUser()
-      .then(({ accounts }) => {
-        setUserAccounts(accounts);
-        updateTotalBalance(accounts, CurrencyCode.USD);
-      });
+    fetchUser().then(({ accounts }) => {
+      setUserAccounts(accounts);
+      updateTotalBalance(accounts, CurrencyCode.USD);
+    });
   }, []);
 
   const updateTotalBalance = (accounts: Account[], selectedCurrency: CurrencyCode) => {
-    fetchExchangeRates()
-      .then(({ data }) => {
-        const total = calculateTotalAmount(accounts, selectedCurrency, data)
-        setTotalBalanceInSelectedCurrency(total);
-      });
+    fetchExchangeRates().then(() => {
+      setTotalBalanceInSelectedCurrency(calculateTotalAmount(accounts, selectedCurrency));
+    });
   };
+
   const form = useForm({
     defaultValues,
     resolver: yupResolver(validationSchema)
