@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "next"
+  ],
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "max-len": [ "warn", { "code": 120 } ],
+    "react-hooks/exhaustive-deps": 0,
+    "react-hooks/rules-of-hooks": 1,
+    "react/react-in-jsx-scope": 0,
+    "array-bracket-spacing": [ "warn", "always" ],
+    "object-curly-spacing": [ "warn", "always" ],
+    "arrow-parens": [ "warn", "always" ],
+    "semi": "warn",
+    "no-alert": "warn",
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "comma-dangle": [ "warn", "never" ],
+    "import/no-anonymous-default-export": 0,
+    "quotes": [ "warn", "single" ],
+    "jsx-quotes": [ "warn", "prefer-double" ]
+  }
+}
