@@ -2,7 +2,7 @@
 
 import React, {PropsWithChildren, useContext} from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthContext } from '@/app/components/AuthProvider';
+import { AuthContext } from '@/components/AuthProvider';
 
 export const PrivateRoute = ({ children } : PropsWithChildren) => {
   const { isAuthenticated} = useContext(AuthContext);
