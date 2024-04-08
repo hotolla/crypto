@@ -48,7 +48,6 @@ export default function Page({ params: { coin } }: { params: { coin: string } })
             width: '60%',
             marginRight: 'auto',
             marginLeft: 'auto',
-            // marginTop: 8,
             marginBottom: 4,
             '& .color.negative': {
                 color: 'error.registration'
