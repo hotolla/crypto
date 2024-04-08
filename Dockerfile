@@ -14,6 +14,7 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 # ENV PROXY END
 
 WORKDIR /app
+
 COPY package*.json ./
 
 RUN npm ci --include=dev --legacy-peer-deps
