@@ -7,11 +7,11 @@ import { Types } from './types';
 
 interface ICurrenciesProviderProps {
   children: ReactNode;
-};
+}
 
 interface ICurrenciesProviderValue extends ICurrenciesState {
   fetchCurrencies: () => void;
-}; 
+}
 
 export const CurrenciesContext = createContext<ICurrenciesProviderValue>({
   ...initialState,

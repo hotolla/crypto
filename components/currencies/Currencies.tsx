@@ -5,24 +5,12 @@ import { useEffect, useContext, useState} from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { DataGrid, GridValueFormatterParams } from '@mui/x-data-grid';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Container, Typography, useMediaQuery } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { changePercent } from '../../helpers/changePercent';
 import { CurrenciesContext } from './CurrenciesProvider';
-
-const columnsForMobile = [
-  { field: 'symbol', headerName: 'Symbol', width: 70, cellClassName: 'symbol' },
-  { field: 'name', headerName: 'Name', width: 90 },
-  { field: 'priceUsd', headerName: 'Price USD', width: 100 },
-  {
-    field: 'Buy',
-    headerName: '',
-    width: 70,
-    renderCell: (currencies: any) => 
-    <Link href={`/markets/${currencies.id}`} color="info.main"><Button>More</Button></Link>
-  }
-];
+import { useTheme } from '@mui/system';
 
 const columns = [
   { field: 'symbol', headerName: 'Symbol', width: 80, cellClassName: 'symbol' },
@@ -50,15 +38,34 @@ const columns = [
     field: 'Buy',
     headerName: '',
     width: 80,
-    renderCell: (currencies: any) =>
-      <Link href={`/markets/${currencies.id}`} color="info.main"><Button>More</Button></Link>
+    renderCell: (currencies: any) => (
+      <Button
+        href={`/markets/${currencies.id}`}
+        LinkComponent={Link}
+      >
+        More
+      </Button>
+    )
   }
 ];
 
+const mobileFields = [
+  'symbol',
+  'name',
+  'priceUsd',
+  'Buy'
+]
+
+const columnsForMobile = columns.filter(({ field }) => {
+  return mobileFields.includes(field);
+})
+
 export const Currencies = () => {
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
-  const [ isMobile, setIsMobile ] = useState(false);
- 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const modifiedColumns = isMobile ? columnsForMobile : columns;
+
   useEffect(() => {
     const interval = setInterval(() => {
       fetchCurrencies();
@@ -67,24 +74,11 @@ export const Currencies = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 600);
-    window.addEventListener('resize', checkMobile);
-    checkMobile();
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const modifiedColumns = isMobile ? columnsForMobile.map(column=> ({ ...column }))
-    : columns.map(column => ({ ...column, })
-  );
-
   return (
-    <Box
+    <Container
+      maxWidth="md"
       sx={{
-        width: { xs: '100%', lg: '56%' },
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        marginBottom: 4,
+          marginBottom: 4,
         '& .color.negative': { color: 'error.main' },
         '& .color.positive': { color: 'success.main' },
         '& .symbol': { fontWeight: 'bold' }
@@ -106,6 +100,6 @@ export const Currencies = () => {
           }
         }}
       />
-    </Box>
+    </Container>
   );
 };

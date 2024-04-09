@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Container } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { CryptoChart } from './СryptoСhart';
@@ -43,11 +43,9 @@ export default function Page({ params: { coin } }: { params: { coin: string } })
         style={{ marginLeft: '50%', marginTop: 12 }}
       />
     ) : (
-      <Box
+      <Container
+        maxWidth="md"
         sx={{
-            width: '60%',
-            marginRight: 'auto',
-            marginLeft: 'auto',
             marginBottom: 4,
             '& .color.negative': {
                 color: 'error.registration'
@@ -84,6 +82,6 @@ export default function Page({ params: { coin } }: { params: { coin: string } })
             <CryptoChart data={history} />
           )}
           <Buy priceUsd={+currency.priceUsd} symbol={currency.symbol}/>
-      </Box>
+      </Container>
     );
 };
